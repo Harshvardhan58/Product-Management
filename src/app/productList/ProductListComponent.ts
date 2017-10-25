@@ -58,4 +58,7 @@ export class ProductListComponent implements OnInit{
       return product.productName.toLocaleLowerCase().indexOf(filterString) !== -1;
     });
   }
+  starClicked(message:string):void{
+    this.pageTitle=  `Product List : ${message}`;
+  }
 }
