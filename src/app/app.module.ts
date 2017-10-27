@@ -8,20 +8,32 @@ import {ConvertToSpaces} from './shared/convertToSpaces';
 import {StarComponent} from './shared/star.component';
 import {ProductsService} from './productList/products.service';
 import {HttpClientModule} from '@angular/common/http';
+import { ProductDetailsComponent } from './products/product-details.component';
+import {WelcomeComponent} from './home/welcome.component';
+import {RouterModule} from '@angular/router';
+import { ProductGaurdService } from './products/product-gaurd.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     ConvertToSpaces,
-    StarComponent
+    StarComponent,
+    ProductDetailsComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path: 'products', component: ProductListComponent},
+      {path: 'products/:id', canActivate : [ProductGaurdService], component: ProductDetailsComponent},
+      {path: '' , component: WelcomeComponent},
+      {path: '**', redirectTo: '/', pathMatch: 'full'}
+    ])
   ],
-  providers: [ProductsService],
+  providers: [ProductsService, ProductGaurdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
