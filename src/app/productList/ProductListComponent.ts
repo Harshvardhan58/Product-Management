@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IProducts} from './products';
 import {ProductsService} from './products.service';
-
 @Component({
   selector: 'pm-products',
   templateUrl: './product-list.component.html',
@@ -26,8 +25,10 @@ export class ProductListComponent implements OnInit {
   filteredProducts: IProducts[];
   products: IProducts[];
   ngOnInit(): void {
-    this.products = this._productService.getProducts();
-    this.filteredProducts = this.listFilter ? this.filtered(this.listFilter) : this.products;
+    this._productService.getProducts().subscribe(products => {this.products = products;
+    this.filteredProducts = this.products;
+    });
+
     console.log('OnInit');
   }
   toggleImage(): void {
